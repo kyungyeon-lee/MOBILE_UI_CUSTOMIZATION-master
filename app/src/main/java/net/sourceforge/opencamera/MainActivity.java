@@ -103,6 +103,8 @@ import android.widget.ZoomControls;
 
 import com.github.mmin18.widget.RealtimeBlurView;
 
+import petrov.kristiyan.colorpicker.ColorPicker;
+
 /**
  * The main Activity for Open Camera.
  */
@@ -4604,10 +4606,10 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
         btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         btnTag.setText(String.valueOf(btn_index));
         btnTag.setTag("ANDROID ICON");
+        //btnTag.setBackgroundColor();
         btnTag.setOnLongClickListener((View.OnLongClickListener) this);
 
 
-        final String[] functions = {"clickedTakePhoto", "clickedSwitchCamera", "clickedGallery", "clickedSwitchVideo"};
         btnTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
