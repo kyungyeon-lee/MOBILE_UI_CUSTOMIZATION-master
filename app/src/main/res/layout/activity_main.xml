@@ -573,8 +573,7 @@
         android:layout_width="360dp"
         android:layout_height="360dp"
         android:layout_gravity="center"
-        android:rotation="-90"
-        >
+        android:rotation="0">
 
 
         <com.github.mmin18.widget.RealtimeBlurView
@@ -582,8 +581,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:realtimeBlurRadius="20dp"
-            app:realtimeOverlayColor="#00000000"
-            />
+            app:realtimeOverlayColor="#00000000" />
 
         <!-- tune radius -->
         <SeekBar
@@ -620,24 +618,33 @@
             android:id="@+id/drag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentBottom="true"
+            android:gravity="center|right"
+            android:rotation="-90"
             android:text="DRAG!"
             android:textSize="20sp" />
+
+
+
         <Button
             android:id="@+id/drag_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:gravity="center"
+            android:rotation="-90"
             android:text="DRAG!"
             android:textSize="20sp" />
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:rotation="-90">
 
             <LinearLayout
                 android:id="@+id/layout1"
@@ -655,6 +662,14 @@
                     android:onClick="ClickedAddBtn"
                     android:src="@drawable/baseline_add_circle_white_48" />
 
+                <Button
+                    android:id="@+id/check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:rotation="0"
+                    android:text="check!"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -670,40 +685,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/layout2_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:id="@+id/layout2_3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:id="@+id/layout2_4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" />
 
 
             </LinearLayout>
@@ -721,41 +734,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:id="@+id/layout3_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:id="@+id/layout3_3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:id="@+id/layout3_4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/border"
                     android:contentDescription="test"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:background="@drawable/border"
-                    />
+                    android:orientation="vertical" />
                 <!--                <ImageView-->
                 <!--                    android:id="@+id/gallery_cp"-->
                 <!--                    android:layout_width="wrap_content"-->
@@ -781,40 +790,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/layout4_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:id="@+id/layout4_3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:id="@+id/layout4_4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:background="@drawable/border"
-                    />
+                    android:gravity="center"
+                    android:orientation="vertical" />
             </LinearLayout>
 
         </LinearLayout>

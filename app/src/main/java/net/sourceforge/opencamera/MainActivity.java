@@ -103,7 +103,6 @@ import android.widget.ZoomControls;
 
 import com.github.mmin18.widget.RealtimeBlurView;
 
-import petrov.kristiyan.colorpicker.ColorPicker;
 
 /**
  * The main Activity for Open Camera.
@@ -199,11 +198,14 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
     SharedPreferences.Editor stackeditor;
     int btn_index;
     String key;
+    Button check;
+    int check_flag;
+    String[] btn_arr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         btn_index = 0;
-
+        btn_arr = new String[]{"8","8","8","8","8","8","8","8","8","8"};
         long debug_time = 0;
         if (MyDebug.LOG) {
             Log.d(TAG, "onCreate: " + this);
@@ -285,8 +287,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
         //kylee
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         stackeditor = sp.edit();
-        /*      stackeditor.putString("key", "0");*/
-        stackeditor.commit();
+
 
         //String callValue = mPref.getString("key", "default value");
 
@@ -313,7 +314,53 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
 
         findViewById(R.id.drag).setOnTouchListener(touchListener);
         findViewById(R.id.drag_2).setOnTouchListener(touchListener);
+        check_flag = 0;
+        findViewById(R.id.check).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                for (int i = 1; i<=4; i++) {
+//                    int id = Integer.parseInt("R.id.layout2_"+String.valueOf(i));
+//                    findViewById(id).setBackgroundColor(Color.parseColor("#00000000"));
+//                }
+                if (check_flag == 0) {
+                    findViewById(R.id.layout2_1).setBackgroundColor(Color.parseColor("#00000000"));
+                    findViewById(R.id.layout2_2).setBackgroundColor(Color.parseColor("#00000000"));
+                    findViewById(R.id.layout2_3).setBackgroundColor(Color.parseColor("#00000000"));
+                    findViewById(R.id.layout2_4).setBackgroundColor(Color.parseColor("#00000000"));
 
+                    findViewById(R.id.layout3_1).setBackgroundColor(Color.parseColor("#00000000"));
+                    findViewById(R.id.layout3_2).setBackgroundColor(Color.parseColor("#00000000"));
+                    findViewById(R.id.layout3_3).setBackgroundColor(Color.parseColor("#00000000"));
+                    findViewById(R.id.layout3_4).setBackgroundColor(Color.parseColor("#00000000"));
+
+
+                    findViewById(R.id.layout4_1).setBackgroundColor(Color.parseColor("#00000000"));
+                    findViewById(R.id.layout4_2).setBackgroundColor(Color.parseColor("#00000000"));
+                    findViewById(R.id.layout4_3).setBackgroundColor(Color.parseColor("#00000000"));
+                    findViewById(R.id.layout4_4).setBackgroundColor(Color.parseColor("#00000000"));
+                    check_flag = 1;
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        findViewById(R.id.layout2_1).setBackground(getDrawable(R.drawable.border));
+                        findViewById(R.id.layout2_2).setBackground(getDrawable(R.drawable.border));
+                        findViewById(R.id.layout2_3).setBackground(getDrawable(R.drawable.border));
+                        findViewById(R.id.layout2_4).setBackground(getDrawable(R.drawable.border));
+
+                        findViewById(R.id.layout3_1).setBackground(getDrawable(R.drawable.border));
+                        findViewById(R.id.layout3_2).setBackground(getDrawable(R.drawable.border));
+                        findViewById(R.id.layout3_3).setBackground(getDrawable(R.drawable.border));
+                        findViewById(R.id.layout3_4).setBackground(getDrawable(R.drawable.border));
+
+                        findViewById(R.id.layout4_1).setBackground(getDrawable(R.drawable.border));
+                        findViewById(R.id.layout4_2).setBackground(getDrawable(R.drawable.border));
+                        findViewById(R.id.layout4_3).setBackground(getDrawable(R.drawable.border));
+                        findViewById(R.id.layout4_4).setBackground(getDrawable(R.drawable.border));
+
+                    }
+                    check_flag = 0;
+                }
+            }
+        });
         //Find all views and set Tag to all draggable views
 
 
@@ -321,7 +368,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
 //        gallery_cp.setTag("ANDROID ICON");
 //        gallery_cp.setOnLongClickListener(this);
 //
-//        ImageView switch_video_cp = (ImageView) findViewById(R.id.switch_video_cp);
+//        ImageView switch_video_cp = (ImageView) findViewById(R.id.switch_video_cp);F
 //        switch_video_cp.setTag("ANDROID ICON");
 //        switch_video_cp.setOnLongClickListener(this);
 
@@ -1247,15 +1294,17 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
 
 
     public void clickedTakePhoto(View view) {
-        key = String.valueOf(btn_index-1);
+        key = String.valueOf(btn_index - 1);
         if (MyDebug.LOG)
-            Log.d(TAG, "clickedTakePhoto"+key);
+            Log.d(TAG, "clickedTakePhoto" + key);
         //delete
-        stackeditor.remove(key);
+        //stackeditor.remove(key);
         //commit
         stackeditor = sp.edit();
         stackeditor.putString(key, "1");
         stackeditor.commit();
+
+        btn_arr[btn_index-1] = "1";
 
         this.takePicture(false);
 
@@ -1535,14 +1584,16 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
      * @param view
      */
     public void clickedSwitchCamera(View view) {
-        key = String.valueOf(btn_index-1);
+        key = String.valueOf(btn_index - 1);
         //delete
         stackeditor.remove(key);
         //commit
         stackeditor = sp.edit();
         stackeditor.putString(key, "2");
         stackeditor.commit();
-        openGallery();
+
+
+        btn_arr[btn_index-1] ="2";
 
         if (MyDebug.LOG)
             Log.d(TAG, "clickedSwitchCamera");
@@ -1560,7 +1611,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
                 String toast_string = getResources().getString(
                         preview.getCameraControllerManager().isFrontFacing(cameraId) ? R.string.front_camera : R.string.back_camera) +
                         " : " + getResources().getString(R.string.camera_id) + " " + cameraId;
-                preview.showToast(null, toast_string);
+                //preview.showToast(null, toast_string);
             }
 
             View switchCameraButton = findViewById(R.id.switch_camera);
@@ -1579,7 +1630,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
      * @param view
      */
     public void clickedSwitchVideo(View view) {
-        key = String.valueOf(btn_index-1);
+        key = String.valueOf(btn_index - 1);
         //delete
         stackeditor.remove(key);
         //commit
@@ -1612,7 +1663,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
         checkDisableGUIIcons();
 
         if (!block_startup_toast) {
-            this.showPhotoVideoToast(true);
+            //this.showPhotoVideoToast(true);
         }
     }
 
@@ -1625,7 +1676,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
     }
 
     public void clickedExposureLock(View view) {
-        key = String.valueOf(btn_index-1);
+        key = String.valueOf(btn_index - 1);
         //delete
         stackeditor.remove(key);
         //commit
@@ -2846,18 +2897,20 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
         if (MyDebug.LOG)
             Log.d(TAG, "clickedGallery");
 
-        key = String.valueOf(btn_index-1);
-        Log.d(TAG, "7716clickedGallery"+key);
-        //delete
-        stackeditor.remove(key);
-        //commit
-        stackeditor = sp.edit();
-        stackeditor.putString(key, "0");
-        stackeditor.commit();
+        btn_arr[btn_index-1] = "0";
         openGallery();
     }
 
     private void openGallery() {
+        key = String.valueOf(btn_index - 1);
+        Log.d(TAG, "7716clickedGallery" + key);
+        //delete
+        //stackeditor.remove(key);
+        //commit
+        stackeditor = sp.edit();
+        stackeditor.putString(key, "0");
+        stackeditor.commit();
+
         if (MyDebug.LOG)
             Log.d(TAG, "openGallery");
         //Intent intent = new Intent(Intent.ACTION_VIEW, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -4492,6 +4545,9 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
 
     @Override
     public boolean onLongClick(View v) {
+        if(btn_arr[btn_index-1] == "8"){
+            Toast.makeText(getApplicationContext(),"기능 설정 안됨",Toast.LENGTH_SHORT).show();
+        }
         // Create a new ClipData.Item from the ImageView object's tag
         ClipData.Item item = new ClipData.Item((CharSequence) v.getTag());
         // Create a new ClipData using the tag as a label, the plain text MIME type, and
@@ -4559,7 +4615,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
                 // Gets the text data from the item.
                 String dragData = item.getText().toString();
                 // Displays a message containing the dragged data.
-                Toast.makeText(this, "Dragged data is " + dragData, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Dragged data is " + dragData, Toast.LENGTH_SHORT).show();
                 // Turns off any color tints
                 v.getBackground().clearColorFilter();
                 // Invalidates the view to force a redraw
@@ -4581,12 +4637,12 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
                 // Invalidates the view to force a redraw
                 v.invalidate();
                 // Does a getResult(), and displays what happened.
-                Toast.makeText(this, v.getContentDescription(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, v.getContentDescription(), Toast.LENGTH_LONG).show();
 
-                if (event.getResult())
-                    Toast.makeText(this, "The drop was handled." + event.getResult(), Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(this, "The drop didn't work.", Toast.LENGTH_SHORT).show();
+//                if (event.getResult())
+//                    Toast.makeText(this, "The drop was handled." + event.getResult(), Toast.LENGTH_SHORT).show();
+//                else
+//                    Toast.makeText(this, "The drop didn't work.", Toast.LENGTH_SHORT).show();
                 // returns true; the value is ignored.
                 return true;
             // An unknown action type was received.
@@ -4606,6 +4662,8 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
         btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         btnTag.setText(String.valueOf(btn_index));
         btnTag.setTag("ANDROID ICON");
+        btnTag.setBackgroundColor(Color.parseColor("#00000000"));
+        btnTag.setTextColor(getResources().getColor(R.color.btn_text));
         //btnTag.setBackgroundColor();
         btnTag.setOnLongClickListener((View.OnLongClickListener) this);
 
@@ -4613,8 +4671,11 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
         btnTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String callValue = sp.getString(btnTag.getText().toString(), "8");
-                Log.e("7716",btnTag.getText().toString()+" callValue:"+callValue);
+
+                int a = Integer.parseInt(btnTag.getText().toString());
+                String callValue = btn_arr[a];
+                        //sp.getString(btnTag.getText().toString(), "8");
+                Log.e("7716", btnTag.getText().toString() + " callValue:" + callValue);
                 //Toast.makeText(getApplicationContext(), btnTag.getText().toString()+"/"+callValue, Toast.LENGTH_LONG).show();
                 functionCall(callValue, view);
 
