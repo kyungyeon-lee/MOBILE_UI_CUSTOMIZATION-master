@@ -12,7 +12,6 @@ import net.sourceforge.opencamera.ui.ManualSeekbars;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,10 +19,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -78,9 +75,7 @@ import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.TextureView;
@@ -91,15 +86,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
+
 
 import com.github.mmin18.widget.RealtimeBlurView;
 
@@ -205,7 +198,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         btn_index = 0;
-        btn_arr = new String[]{"8","8","8","8","8","8","8","8","8","8"};
+        btn_arr = new String[]{"8", "8", "8", "8", "8", "8", "8", "8", "8", "8"};
         long debug_time = 0;
         if (MyDebug.LOG) {
             Log.d(TAG, "onCreate: " + this);
@@ -294,7 +287,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
 
         blurView = (RealtimeBlurView) findViewById(R.id.blur_view);
         blurRadius = (SeekBar) findViewById(R.id.blur_radius);
-        blurRadius.setProgress(10);
+        blurRadius.setProgress(0);
         blurRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -309,7 +302,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-//        blurRadiusText = (TextView) findViewById(R.id.blur_radius_val);
+        blurRadiusText = (TextView) findViewById(R.id.blur_radius_val);
         updateRadius();
 
         findViewById(R.id.drag).setOnTouchListener(touchListener);
@@ -318,10 +311,6 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
         findViewById(R.id.check).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                for (int i = 1; i<=4; i++) {
-//                    int id = Integer.parseInt("R.id.layout2_"+String.valueOf(i));
-//                    findViewById(id).setBackgroundColor(Color.parseColor("#00000000"));
-//                }
                 if (check_flag == 0) {
                     findViewById(R.id.layout2_1).setBackgroundColor(Color.parseColor("#00000000"));
                     findViewById(R.id.layout2_2).setBackgroundColor(Color.parseColor("#00000000"));
@@ -702,8 +691,8 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
 
     //kylee
     private void updateRadius() {
-        //   blurView.setBlurRadius(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, blurRadius.getProgress(), getResources().getDisplayMetrics()));
-        //blurRadiusText.setText(blurRadius.getProgress() + "dp");
+        blurView.setBlurRadius(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, blurRadius.getProgress(), getResources().getDisplayMetrics()));
+        blurRadiusText.setText(blurRadius.getProgress() + "dp");
     }
 
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
@@ -1304,7 +1293,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
         stackeditor.putString(key, "1");
         stackeditor.commit();
 
-        btn_arr[btn_index-1] = "1";
+        btn_arr[btn_index - 1] = "1";
 
         this.takePicture(false);
 
@@ -1593,7 +1582,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
         stackeditor.commit();
 
 
-        btn_arr[btn_index-1] ="2";
+        btn_arr[btn_index - 1] = "2";
 
         if (MyDebug.LOG)
             Log.d(TAG, "clickedSwitchCamera");
@@ -2897,7 +2886,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
         if (MyDebug.LOG)
             Log.d(TAG, "clickedGallery");
 
-        btn_arr[btn_index-1] = "0";
+        btn_arr[btn_index - 1] = "0";
         openGallery();
     }
 
@@ -4545,24 +4534,26 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
 
     @Override
     public boolean onLongClick(View v) {
-        if(btn_arr[btn_index-1] == "8"){
-            Toast.makeText(getApplicationContext(),"기능 설정 안됨",Toast.LENGTH_SHORT).show();
+        if (btn_arr[btn_index - 1] == "8") {
+            Toast.makeText(getApplicationContext(), "기능 설정 안됨", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            // Create a new ClipData.Item from the ImageView object's tag
+            ClipData.Item item = new ClipData.Item((CharSequence) v.getTag());
+            // Create a new ClipData using the tag as a label, the plain text MIME type, and
+            // the already-created item. This will create a new ClipDescription object within the
+            // ClipData, and set its MIME type entry to "text/plain"
+            String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
+            ClipData data = new ClipData(v.getTag().toString(), mimeTypes, item);
+            // Instantiates the drag shadow builder.
+            View.DragShadowBuilder dragshadow = new View.DragShadowBuilder(v);
+            // Starts the drag
+            v.startDrag(data        // data to be dragged
+                    , dragshadow   // drag shadow builder
+                    , v           // local data about the drag and drop operation
+                    , 0          // flags (not currently used, set to 0)
+            );
         }
-        // Create a new ClipData.Item from the ImageView object's tag
-        ClipData.Item item = new ClipData.Item((CharSequence) v.getTag());
-        // Create a new ClipData using the tag as a label, the plain text MIME type, and
-        // the already-created item. This will create a new ClipDescription object within the
-        // ClipData, and set its MIME type entry to "text/plain"
-        String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
-        ClipData data = new ClipData(v.getTag().toString(), mimeTypes, item);
-        // Instantiates the drag shadow builder.
-        View.DragShadowBuilder dragshadow = new View.DragShadowBuilder(v);
-        // Starts the drag
-        v.startDrag(data        // data to be dragged
-                , dragshadow   // drag shadow builder
-                , v           // local data about the drag and drop operation
-                , 0          // flags (not currently used, set to 0)
-        );
         return true;
     }
 
@@ -4674,7 +4665,7 @@ public class MainActivity extends Activity implements View.OnDragListener, View.
 
                 int a = Integer.parseInt(btnTag.getText().toString());
                 String callValue = btn_arr[a];
-                        //sp.getString(btnTag.getText().toString(), "8");
+                //sp.getString(btnTag.getText().toString(), "8");
                 Log.e("7716", btnTag.getText().toString() + " callValue:" + callValue);
                 //Toast.makeText(getApplicationContext(), btnTag.getText().toString()+"/"+callValue, Toast.LENGTH_LONG).show();
                 functionCall(callValue, view);

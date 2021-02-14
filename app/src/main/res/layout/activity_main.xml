@@ -592,7 +592,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
             android:max="100"
-            android:visibility="gone" />
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -602,7 +602,7 @@
             android:text="radius"
             android:textColor="#000"
             android:textSize="13sp"
-            android:visibility="gone" />
+           />
 
         <TextView
             android:id="@+id/blur_radius_val"
@@ -612,7 +612,7 @@
             android:layout_toRightOf="@+id/blur_radius"
             android:textColor="#000"
             android:textSize="13sp"
-            android:visibility="gone" />
+         />
 
         <Button
             android:id="@+id/drag"
